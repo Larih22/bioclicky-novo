@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+ 
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+    <title>BioClicky - Farmácias</title>
+ 
+    <link rel="stylesheet" href="/css/farmacias.css">
+<script src="/js/tema.js" defer></script>
+</head>
+ 
+<body>
+ 
+    <!-- CABEÇALHO -->
+<header class="navbar">
+ 
+        <section class="navbar-container">
+ 
+            <a href="/" class="logo">
+<span class="logo-icon">✚</span>
+<span>Bio<span class="logo-green">Clicky</span></span>
+</a>
+ 
+            <nav class="nav-links">
+<a href="#">Buscar</a>
+<a href="#">Categorias</a>
+<a href="#" class="active">Farmácias</a>
+<a href="#">Como funciona</a>
+</nav>
+ 
+            <nav class="nav-actions">
+ 
+                <section class="theme-switch">
+ 
+                    <button id="lightMode" class="theme-button" type="button">
+                        ☼ <span>Claro</span>
+</button>
+ 
+                    <button id="darkMode" class="theme-button" type="button">
+                        ☾ <span>Escuro</span>
+</button>
+ 
+                </section>
+ 
+                <button class="favorite-button" aria-label="Favoritos">
+                    ♡
+</button>
+ 
+                <a href="#" class="login-button">
+                    ♙ Entrar
+</a>
+ 
+            </nav>
+ 
+        </section>
+ 
+    </header>
+ 
+ 
+    <!-- CONTEÚDO PRINCIPAL -->
+<main class="container">
+ 
+        <header class="page-heading">
+ 
+            <span class="eyebrow">REDE PARCEIRA</span>
+ 
+            <h1>Farmácias comparadas</h1>
+ 
+            <p>
+                Consulte preços em redes verificadas e encontre
+                uma unidade perto de você.
+</p>
+ 
+        </header>
+ 
+ 
+        <!-- PESQUISA -->
+<section class="search-container">
+ 
+            <span class="search-icon">⌕</span>
+ 
+            <input
+                type="text"
+                id="searchPharmacy"
+                placeholder="Busque uma farmácia"
+                autocomplete="off"
+>
+ 
+            <button class="location-button" type="button">
+                ♧ São Paulo, SP
+</button>
+ 
+        </section>
+ 
+ 
+        <!-- CARDS DAS FARMÁCIAS -->
+<section class="pharmacy-grid" id="pharmacyGrid">
+ 
+            <% farmacias.forEach(farmacia => { %>
+ 
+                <article
+                    class="pharmacy-card"
+                    data-name="<%= farmacia.nome.toLowerCase() %>"
+>
+ 
+                    <header class="card-top">
+ 
+                        <span
+                            class="pharmacy-logo"
+                            style="--logo-color: <%= farmacia.cor %>"
+>
+<%= farmacia.sigla %>
+</span>
+ 
+                        <span class="verified">
+                            ✓ Verificada
+</span>
+ 
+                    </header>
+ 
+                    <h2>
+<%= farmacia.nome %>
+</h2>
+ 
+                    <section class="pharmacy-info">
+ 
+                        <p>
+<span>♧</span>
+<%= farmacia.unidades %> unidades perto da sua região
+</p>
+ 
+                        <p>
+<span>◷</span>
+<%= farmacia.servico %>
+</p>
+ 
+                    </section>
+ 
+                    <a
+                        href="<%= farmacia.link %>"
+                        class="card-button"
+>
+                        Ver medicamentos
+<span>→</span>
+</a>
+ 
+                </article>
+ 
+            <% }) %>
+ 
+        </section>
+ 
+        <p class="no-results" id="noResults" hidden>
+            Nenhuma farmácia encontrada.
+</p>
+ 
+    </main>
+ 
+ 
+    <!-- ACESSIBILIDADE -->
+<button class="accessibility-button" type="button">
+        ♙ Acessibilidade
+</button>
+ 
+ 
+    <!-- PESQUISA DE FARMÁCIAS -->
+<script>
+ 
+        const searchInput = document.getElementById("searchPharmacy");
+ 
+        const cards = document.querySelectorAll(".pharmacy-card");
+ 
+        const noResults = document.getElementById("noResults");
+ 
+        searchInput.addEventListener("input", function () {
+ 
+            const search = this.value.toLowerCase().trim();
+ 
+            let visibleCards = 0;
+ 
+            cards.forEach(card => {
+ 
+                const name = card.dataset.name;
+ 
+                const match = name.includes(search);
+ 
+                card.hidden = !match;
+ 
+                if (match) {
+                    visibleCards++;
+                }
+ 
+            });
+ 
+            noResults.hidden = visibleCards !== 0;
+ 
+        });
+ 
+    </script>
+ 
+</body>
+</html>
